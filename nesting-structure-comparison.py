@@ -1,4 +1,5 @@
-
+"""
+This is what i tried lol
 def compare(original,other):
     def zeros(lst):
         # for i in range(len(lst)):
@@ -12,10 +13,10 @@ def compare(original,other):
          
 print(compare([1,[1,1]],[[2,2],2]))
 print(compare([1,[1,1]],[2,[2,2]]))
-
 """
-Final Solution:
----------------
+
+#Final Solution:
+#---------------
 def compare(original,other):
     def zeros(lst):
         return [zeros(lst[i]) if isinstance(lst[i], list) else 0 for i in range(len(lst))]
@@ -23,4 +24,3 @@ def compare(original,other):
         return zeros(original) == zeros(other) and type(original) == type(other)
     except:
         return False
-"""
