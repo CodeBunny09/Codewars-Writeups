@@ -38,70 +38,13 @@ mix(s1, s2) --> "=:aaaaaa/2:eeeee/=:fffff/1:tt/2:rr/=:hh"
 #Solution:-
 
 def mix(s1, s2):
-    # I wrote a algorithm to count the number of lowercase letters and add it to the dictionary.
-    # s1_dict = {}
-    # s2_dict = {}
-    # for i in s1:
-    #     if i.islower():
-    #         count = s1.count(i)
-    #         if count > 1:
-    #             s1_dict[i] = count
-    # for i in s2:
-    #     if i.islower():
-    #         count = s2.count(i)
-    #         if count > 1:
-    #             s2_dict[i] = count
-
-    #Then I made a comprehension for the algorithm.
-
-    s1_dict = {k:v for (k, v) in zip([i for i in s1 if i.islower() and s1.count(i) > 1], [s1.count(i) for i in s1 if i.islower() and s1.count(i) > 1])}
-    s2_dict = {k:v for (k, v) in zip([i for i in s2 if i.islower() and s2.count(i) > 1], [s2.count(i) for i in s2 if i.islower() and s2.count(i) > 1])}
+    #First I'm gonna initialize a dictionary
+    dict = {}
     
-    #print(s1_dict, '\n', s2_dict) For checking the algorithm and the comprehension actually works
+    for i in 'abcdefghijklmnopqrstuvwxyz': #Then I'm gonna iterate through all the lowercase characters
+        val1, val2 = s1.count(i), s2.count(i)
 
-    #Then I'm gonna check which dictionary has more keys and copy it to 'main_dict' for comparison to make sure none of the keys get omitted
-    if len(s1_dict.keys()) >= len(s2_dict.keys()):
-        main_dict = s1_dict
-    else:
-        main_dict = s2_dict
-
-    #Then I'm gonna do the main comparison and append it to a list called 'result_list'    
-    result_list = []
-    for key in main_dict.keys():
-        if key in s1_dict.keys() and key in s2_dict.keys():
-            if s1_dict[key] > s2_dict[key]:
-                result_list.append(f"1:{key * s1_dict[key]}")
-            elif s1_dict[key] < s2_dict[key]:
-                result_list.append(f"2:{key * s2_dict[key]}")
-            elif s1_dict[key] == s2_dict[key]:
-                result_list.append(f"=:{key * s2_dict[key]}")
-        else:
-            if main_dict == s1_dict:
-                result_list.append(f"1:{key * s1_dict[key]}")
-            else:
-                result_list.append(f"2:{key * s2_dict[key]}")
-
-    #print(result_list)  Again for checking that the algorithm I wrote is working
-
-    #Then I'm gonna join the result_list with '/' as delimiter and return it
-    return  ('/').join(result_list)
-print(mix("Are they here", "yes, they are here"))
-
-
-
-message="""
-        _
-       | |
-     ( | | )
-    ^^^^^^^^^^^^^^^^^^^
-   /       FUCK        \\
-  -----------------------
- / It's giving errors!   \\
-{_________________________}
-|__________________________|
-| +++++  |>)    _          |
-|   | O  |>)E  |_ ontd.... |
-|__________________________|
-It is giving error when i test it... I'll do it tomorrow.
-"""
-print(message)
+        if max(val1, val2) > 1: #Few conditionals for satisfying the ginven instruction
+            which = "1:" if val1 > val2 else "2:" if val2 > val1 else "=:"
+            dict[i] = [-max(val1, val2), f'{which}{i*max(val1, val2)}'] #Here I used '-max()' in the begining for the sorting we will do when we return the answer
+    return '/'.join(dict[ch][1] for ch in sorted(dict, key= lambda x: dict[x])) #Here I return the joined string of the sorted dictionary.
